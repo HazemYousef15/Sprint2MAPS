@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/mapFragment">
+
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.twins.maps_kt.calendar.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.twins.maps_kt.map.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.example.twins.maps_kt.notification.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/qrFragment"
+        android:name="com.example.twins.maps_kt.qrcode.QrFragment"
+        android:label="fragment_qr"
+        tools:layout="@layout/fragment_qr" />
+    <fragment
+        android:id="@+id/savedPlaces"
+        android:name="com.example.twins.maps_kt.qrcode.QrFragment"
+        android:label="saved"
+        tools:layout="@layout/fragment_saved_places" />
+</navigation>
