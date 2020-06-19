@@ -42,11 +42,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.OnConnection
     private val LAT_LNG_BOUNDS = LatLngBounds(
             LatLng(-40.0, -168.0), LatLng(71.0, 136.0))
 
-    private var mSearchText: EditText? = null;
+    //private var mSearchText: EditText? = null;
 
-    private var mGps: ImageView? = null
+    //private var mGps: ImageView? = null
 
-    private var mInfo: ImageView? = null
+    //private var mInfo: ImageView? = null
     private var contex2t: Context? = null
     private var mPlaceAutocompleteAdapter: PlaceAutocompleteAdapter? = null
     private var mGoogleApiClient: GoogleApiClient? = null
@@ -57,19 +57,26 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.OnConnection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mSearchText= view?.findViewById<EditText>(R.id.input_search)
-        mGps =  view?.findViewById<ImageView>(R.id.ic_gps);
-        mInfo =  view?.findViewById<ImageView>(R.id.place_info);
+        //mSearchText= view?.findViewById<EditText>(R.id.input_search)
+        //mGps =  view?.findViewById<ImageView>(R.id.ic_gps);
+        //mInfo =  view?.findViewById<ImageView>(R.id.place_info);
 
 
-        getLocationPermission()
+        //getLocationPermission()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        var rootView = inflater.inflate(R.layout.fragment_map, container, false)
 
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        //val mapFragment = childFragmentManager
+        //        .findFragmentById(R.id.map) as SupportMapFragment?
+        //mapFragment?.getMapAsync(this)
+        getLocationPermission()
+
+        return  rootView
+        //return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
@@ -81,7 +88,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.OnConnection
             getDeviceLocation()
 
             if (activity?.applicationContext?.let { ActivityCompat.checkSelfPermission(it, Manifest.permission.ACCESS_FINE_LOCATION) }
-                    != PackageManager.PERMISSION_GRANTED && context?.let {
+                    != PackageManager.PERMISSION_GRANTED && contex2t?.let {
                         ActivityCompat.checkSelfPermission(it,
                                 Manifest.permission.ACCESS_COARSE_LOCATION)
                     } != PackageManager.PERMISSION_GRANTED) {
@@ -90,13 +97,13 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.OnConnection
             mMap!!.setMyLocationEnabled(true);              //mark blue dot on my current device location
             mMap!!.getUiSettings().setMyLocationButtonEnabled(false); //remove the navigation button as it conflicts with the search bar so we will make a custom one
 
-            init()
+            //init()
         }
     }
 
 
 
-    private fun geoLocate() {
+    /*private fun geoLocate() {
         Log.d(TAG, "geoLocate: geolocating")
 
         val searchString = mSearchText!!.text.toString()
@@ -120,11 +127,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.OnConnection
 
             moveCamera(LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM,address.getAddressLine(0))
         }
-    }
+    }*/
     private fun getDeviceLocation() {
         Log.d(TAG, "getDeviceLocation: getting the devices current location")
 
-        mFusedLocationProviderClient = context?.let { LocationServices.getFusedLocationProviderClient(it) }!!
+        mFusedLocationProviderClient = contex2t?.let { LocationServices.getFusedLocationProviderClient(it) }!!
 
         try {
             if (mLocationPermissionsGranted) {
@@ -179,7 +186,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.OnConnection
         Log.d(TAG, "getLocationPermission: getting location permissions")
         val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
 
-        if (context?.applicationContext?.let {
+        if (contex2t?.applicationContext?.let {
                     ContextCompat.checkSelfPermission(it,
                             FINE_LOCATION)
                 } == PackageManager.PERMISSION_GRANTED) {
@@ -188,18 +195,17 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.OnConnection
                 mLocationPermissionsGranted = true
                 initMap()
             } else {
-                ActivityCompat.requestPermissions(context as Activity,            // if no permession is granted onrequestpermessionresult begins to be called
+                requestPermissions(            // if no permession is granted onrequestpermessionresult begins to be called
                         permissions,
                         LOCATION_PERMISSION_REQUEST_CODE)
             }
         } else {
-            ActivityCompat.requestPermissions(context as Activity,
-                    permissions,
-                    LOCATION_PERMISSION_REQUEST_CODE)
+            requestPermissions(permissions, LOCATION_PERMISSION_REQUEST_CODE)
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         Log.d(TAG, "onRequestPermissionsResult: called.")
         mLocationPermissionsGranted = false
 
@@ -223,13 +229,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.OnConnection
     }
 
     private fun initMap() {
-
-
         val mapFragment = childFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
-    private fun init(){
+    /*private fun init(){
         Log.d(TAG, "init: initializing");
 
 
@@ -274,9 +278,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.OnConnection
             drawer_layout.openDrawer(Gravity.LEFT)
         }
        // hideSoftKeyboard()
-    }
+    }*/
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        contex2t = context
     }
 
     override fun onConnectionFailed(p0: ConnectionResult) {

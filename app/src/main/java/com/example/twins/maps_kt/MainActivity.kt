@@ -14,6 +14,7 @@ import android.widget.Button
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.twins.maps_kt.map.MapFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -69,5 +70,10 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "You can't make map requests", Toast.LENGTH_SHORT).show()
         }
         return false
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
     }
 }

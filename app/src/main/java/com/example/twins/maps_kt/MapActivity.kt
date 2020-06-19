@@ -278,7 +278,7 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback , GoogleApiClient.OnC
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    /*override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         Log.d(TAG, "onRequestPermissionsResult: called.")
         mLocationPermissionsGranted = false
 
@@ -299,7 +299,7 @@ class MapActivity : AppCompatActivity(),OnMapReadyCallback , GoogleApiClient.OnC
                 }
             }
         }
-    }
+    }*/
     private fun hideSoftKeyboard(){
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
